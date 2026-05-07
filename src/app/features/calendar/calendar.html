@@ -1,0 +1,77 @@
+<app-navbar></app-navbar>
+
+<div class="page-container">
+  <div class="calendar-card">
+
+    <!-- Nagłówek kalendarza -->
+    <div class="cal-header">
+      <h2>Kalendarz</h2>
+      <div class="month-nav">
+        <button class="nav-btn" (click)="prevMonth()" title="Poprzedni miesiąc">‹</button>
+        <span class="month-label">{{ monthLabel }}</span>
+        <button class="nav-btn" (click)="nextMonth()" title="Następny miesiąc">›</button>
+      </div>
+    </div>
+
+    <!-- Siatka kalendarza -->
+    <div class="cal-grid">
+
+      <!-- Nagłówki dni tygodnia -->
+      <div class="cal-day-name" *ngFor="let d of dayNames">{{ d }}</div>
+
+      <!-- Komórki dni -->
+      <ng-container *ngFor="let week of weeks">
+        <div
+          *ngFor="let day of week"
+          class="cal-cell"
+          [class.today]="day.isToday"
+          [class.has-tasks]="day.tasks.length > 0"
+          [class.selected]="selectedDay?.dateStr === day.dateStr"
+          [class.empty-cell]="!day.dayNum"
+          (click)="selectDay(day)"
+        >
+          <span class="day-number" *ngIf="day.dayNum">{{ day.dayNum }}</span>
+          <div class="task-dots" *ngIf="day.tasks.length > 0">
+            <span
+              *ngFor="let t of day.tasks.slice(0, 3)"
+              class="task-dot"
+              [ngClass]="dotClass(t)"
+            ></span>
+            <span *ngIf="day.tasks.length > 3" class="dots-more">+{{ day.tasks.length - 3 }}</span>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Panel wybranego dnia -->
+    <div class="selected-day-panel" *ngIf="selectedDay && selectedDay.tasks.length > 0">
+      <h4>{{ formatDate(selectedDay.dateStr) }}</h4>
+      <div *ngFor="let t of selectedDay.tasks" class="mini-task" [class.done]="t.done">
+        <span class="badge" [ngClass]="priorityClass(t)">{{ priorityLabel(t) }}</span>
+        <span class="mini-name">{{ t.name }}</span>
+      </div>
+    </div>
+    <div class="selected-day-panel empty" *ngIf="selectedDay && selectedDay.tasks.length === 0">
+      <p>Brak zadań w tym dniu</p>
+    </div>
+
+    <!-- Lista zadań w miesiącu -->
+    <div class="month-tasks">
+      <h3>ZADANIA W TYM MIESIĄCU
+        <span class="task-count">{{ monthTasks.length }}</span>
+      </h3>
+
+      <div *ngIf="monthTasks.length === 0" class="empty-state">
+        <span>📅</span> Brak zadań w tym miesiącu
+      </div>
+
+      <div *ngFor="let task of monthTasks" class="month-task-row" [class.done]="task.done">
+        <span class="row-dot" [ngClass]="dotClass(task)"></span>
+        <span class="row-name">{{ task.name }}</span>
+        <span class="badge" [ngClass]="priorityClass(task)">{{ priorityLabel(task) }}</span>
+        <span class="row-date">{{ formatDate(task.date) }}</span>
+      </div>
+    </div>
+
+  </div>
+</div>

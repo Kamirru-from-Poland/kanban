@@ -1,0 +1,17 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <span class="brand-icon">📚</span>
+    <span class="brand-name">Study Planner</span>
+  </div>
+
+  <div class="navbar-tabs">
+    <a routerLink="/tasks" routerLinkActive="active">Zadania</a>
+    <a routerLink="/calendar" routerLinkActive="active">Kalendarz</a>
+  </div>
+
+  <div class="navbar-user">
+    <div class="user-avatar">{{ initials }}</div>
+    <span class="user-login">{{ auth.getUserLogin() }}</span>
+    <button class="btn-logout" (click)="auth.logout()">Wyloguj</button>
+  </div>
+</nav>

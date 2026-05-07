@@ -1,0 +1,90 @@
+<app-navbar></app-navbar>
+
+<div class="page-container">
+  <div class="tasks-card">
+    <h2>Moje zadania</h2>
+
+    <!-- Formularz dodawania -->
+    <form class="add-form" [formGroup]="addForm" (ngSubmit)="addTask()">
+      <span class="add-label">DODAJ NOWE ZADANIE</span>
+      <div class="add-row">
+        <input
+          formControlName="name"
+          type="text"
+          placeholder="Nazwa zadania / temat do nauki..."
+          class="input-name"
+          autocomplete="off"
+        />
+        <input
+          formControlName="date"
+          type="date"
+          class="input-date"
+        />
+        <select formControlName="priority" class="input-priority">
+          <option *ngFor="let p of priorities" [value]="p">{{ p }}</option>
+        </select>
+        <button type="submit" class="btn-add" [disabled]="addForm.invalid">
+          <span>+</span> Dodaj
+        </button>
+      </div>
+    </form>
+
+    <!-- Filtry z licznikami -->
+    <div class="filters">
+      <button [class.active]="filter === 'wszystkie'" (click)="setFilter('wszystkie')">
+        Wszystkie <span class="count">{{ count('wszystkie') }}</span>
+      </button>
+      <button [class.active]="filter === 'do-zrobienia'" (click)="setFilter('do-zrobienia')">
+        Do zrobienia <span class="count">{{ count('do-zrobienia') }}</span>
+      </button>
+      <button [class.active]="filter === 'zrobione'" (click)="setFilter('zrobione')">
+        Zrobione <span class="count">{{ count('zrobione') }}</span>
+      </button>
+    </div>
+
+    <!-- Lista zadań -->
+    <div class="task-list">
+
+      <div *ngIf="filtered.length === 0" class="empty-state">
+        <span class="empty-icon">📋</span>
+        <p>Brak zadań w tej kategorii</p>
+      </div>
+
+      <div *ngFor="let task of filtered" class="task-item" [class.done]="task.done">
+
+        <!-- Widok normalny -->
+        <ng-container *ngIf="editingTask?.id !== task.id">
+          <label class="task-check">
+            <input type="checkbox" [checked]="task.done" (change)="toggleDone(task)" />
+            <span class="checkmark"></span>
+          </label>
+          <div class="task-info">
+            <span class="task-name">{{ task.name }}</span>
+            <div class="task-meta">
+              <span class="task-date">📅 {{ formatDate(task.date) }}</span>
+              <span class="badge" [ngClass]="priorityClass(task)">{{ priorityLabel(task) }}</span>
+            </div>
+          </div>
+          <div class="task-actions">
+            <button class="btn-icon btn-edit" title="Edytuj" (click)="startEdit(task)">✏️</button>
+            <button class="btn-icon btn-delete" title="Usuń" (click)="deleteTask(task.id)">✕</button>
+          </div>
+        </ng-container>
+
+        <!-- Widok edycji inline -->
+        <ng-container *ngIf="editingTask?.id === task.id">
+          <form [formGroup]="editForm" (ngSubmit)="saveEdit()" class="edit-row">
+            <input formControlName="name" type="text" class="input-name" />
+            <input formControlName="date" type="date" class="input-date" />
+            <select formControlName="priority" class="input-priority">
+              <option *ngFor="let p of priorities" [value]="p">{{ p }}</option>
+            </select>
+            <button type="submit" class="btn-save" [disabled]="editForm.invalid">Zapisz</button>
+            <button type="button" class="btn-cancel" (click)="cancelEdit()">Anuluj</button>
+          </form>
+        </ng-container>
+
+      </div>
+    </div>
+  </div>
+</div>

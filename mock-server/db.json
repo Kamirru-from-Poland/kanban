@@ -1,0 +1,59 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "login": "jan_kowalski",
+      "password": "haslo123"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "1",
+      "userId": "1",
+      "name": "Matematyka – całki oznaczone",
+      "date": "2026-05-05",
+      "done": true,
+      "priority": "Pilne"
+    },
+    {
+      "id": "3",
+      "userId": "1",
+      "name": "Historia – daty I wojny światowej",
+      "date": "2026-05-03",
+      "done": true,
+      "priority": "Zrobione"
+    },
+    {
+      "id": "4",
+      "userId": "1",
+      "name": "Angielski – słówka unit 7",
+      "date": "2026-05-15",
+      "done": false,
+      "priority": "Zaplanowane"
+    },
+    {
+      "id": "5",
+      "userId": "1",
+      "name": "Chemia – wzory organiczne",
+      "date": "2026-05-20",
+      "done": false,
+      "priority": "Zaplanowane"
+    },
+    {
+      "userId": "1",
+      "name": "vbnvb",
+      "date": "2026-05-07",
+      "done": false,
+      "priority": "Zaplanowane",
+      "id": "n7xHvAs"
+    },
+    {
+      "userId": "1",
+      "name": "Matematyka 1",
+      "date": "2026-05-07",
+      "done": true,
+      "priority": "Ważne",
+      "id": "ipCwGQa"
+    }
+  ]
+}

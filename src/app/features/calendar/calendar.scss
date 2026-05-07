@@ -1,0 +1,274 @@
+.page-container {
+  min-height: calc(100vh - 60px);
+  background: #f0f2f5;
+  padding: 32px 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.calendar-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  height: fit-content;
+}
+
+/* ── Nagłówek ── */
+.cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0;
+  }
+}
+
+.month-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .month-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a2e;
+    min-width: 160px;
+    text-align: center;
+  }
+}
+
+.nav-btn {
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  transition: all 0.2s;
+
+  &:hover { background: #f0f2f5; border-color: #bbb; color: #1a1a2e; }
+}
+
+/* ── Siatka kalendarza — CSS Grid ── */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.cal-day-name {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #aaa;
+  letter-spacing: 0.5px;
+  padding: 6px 0 10px;
+}
+
+.cal-cell {
+  min-height: 68px;
+  border-radius: 10px;
+  border: 1.5px solid transparent;
+  padding: 8px 6px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: #fafafa;
+
+  &:hover:not(.empty-cell) {
+    background: #f0f4ff;
+    border-color: #c5d0fb;
+  }
+
+  &.today {
+    background: #4a6cf7;
+    border-color: #4a6cf7;
+
+    .day-number { color: #fff; font-weight: 700; }
+  }
+
+  &.selected:not(.today) {
+    background: #eef1ff;
+    border-color: #4a6cf7;
+  }
+
+  &.empty-cell {
+    background: transparent;
+    cursor: default;
+    border-color: transparent;
+  }
+
+  &.has-tasks:not(.today) .day-number {
+    color: #1a1a2e;
+  }
+}
+
+.day-number {
+  font-size: 13px;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 4px;
+}
+
+.task-dots {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.task-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+
+  &.dot-urgent    { background: #e53e3e; }
+  &.dot-important { background: #d97706; }
+  &.dot-planned   { background: #4a6cf7; }
+  &.dot-done      { background: #38a169; }
+}
+
+.dots-more {
+  font-size: 9px;
+  color: #999;
+  font-weight: 600;
+}
+
+/* ── Panel wybranego dnia ── */
+.selected-day-panel {
+  background: #f8f9ff;
+  border: 1.5px solid #e8eaf6;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 24px;
+
+  h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 10px;
+  }
+
+  &.empty {
+    p { font-size: 13px; color: #aaa; margin: 0; }
+  }
+}
+
+.mini-task {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+
+  &:last-child { border-bottom: none; }
+  &.done .mini-name { text-decoration: line-through; color: #aaa; }
+}
+
+.mini-name {
+  font-size: 13px;
+  color: #333;
+}
+
+/* ── Lista zadań miesiąca ── */
+.month-tasks {
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #aaa;
+    letter-spacing: 0.8px;
+    margin: 0 0 14px;
+  }
+
+  .task-count {
+    background: #f0f0f0;
+    color: #888;
+    border-radius: 10px;
+    padding: 1px 8px;
+    font-size: 11px;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 24px;
+  color: #bbb;
+  font-size: 14px;
+}
+
+.month-task-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 0;
+  border-bottom: 1px solid #f5f5f5;
+
+  &:last-child { border-bottom: none; }
+  &.done .row-name { text-decoration: line-through; color: #bbb; }
+}
+
+.row-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &.dot-urgent    { background: #e53e3e; }
+  &.dot-important { background: #d97706; }
+  &.dot-planned   { background: #4a6cf7; }
+  &.dot-done      { background: #38a169; }
+}
+
+.row-name {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1a1a2e;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.row-date {
+  font-size: 12px;
+  color: #aaa;
+  flex-shrink: 0;
+}
+
+/* ── Badge ── */
+.badge {
+  padding: 2px 9px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+
+  &.badge-urgent    { background: #fff0f0; color: #e53e3e; }
+  &.badge-important { background: #fffbeb; color: #d97706; }
+  &.badge-planned   { background: #f0f4ff; color: #4a6cf7; }
+  &.badge-done      { background: #f0fff4; color: #38a169; }
+}
